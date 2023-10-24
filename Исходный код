@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+
+std::string encryptCaesarCipher(const std::string& text, int shift) {
+    std::string encryptedText = text;
+    
+    for (char& ch : encryptedText) {
+        if (std::isalpha(ch)) {  // проверяем, является ли символ буквой
+            char base = isupper(ch) ? 'A' : 'a';  // определяем базовый символ - 'A' или 'a'
+            ch = (ch - base + shift) % 26 + base;  // выполняем сдвиг
+        }
+    }
+    
+    return encryptedText;
+}
+
+std::string decryptCaesarCipher(const std::string& encryptedText, int shift) {
+    return encryptCaesarCipher(encryptedText, 26 - shift);  // расшифровка - сдвиг в обратную сторону
+}
+
+int main() {
+    std::string text;
+    int shift;
+    
+    std::cout << "Введите текст: ";
+    std::getline(std::cin, text);
+    
+    std::cout << "Введите шаг сдвига: ";
+    std::cin >> shift;
+    
+    std::string encryptedText = encryptCaesarCipher(text, shift);
+    std::string decryptedText = decryptCaesarCipher(encryptedText, shift);
+    
+    std::cout << "Зашифрованный текст: " << encryptedText << std::endl;
+    std::cout << "Расшифрованный текст: " << decryptedText << std::endl;
+    
+    return 0;
+}
+
